@@ -1,5 +1,23 @@
 import * as vscode from "vscode";
 import { exec } from "child_process";
+import * as path from 'path'
+
+function escapeHtml(unsafeText: string) {
+  return unsafeText
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function updateStatusBarItem(editor: vscode.TextEditor | undefined, item: vscode.StatusBarItem) {
+	if (editor && editor.document.languageId === "yaml") {
+		item.show()
+	} else {
+		item.hide()
+	}
+}
 
 export function activate(context: vscode.ExtensionContext) {
   let disposable = vscode.commands.registerCommand(
@@ -11,30 +29,38 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const text = editor.document.getText();
       try {
-				const currentPath = editor.document.uri.fsPath
+				const currentFilePath = editor.document.uri.fsPath
+				const directoryPath = path.dirname(currentFilePath);
+				const command = `cd ${directoryPath} && skaffold render -f ${currentFilePath}`
 
-			  exec(`skaffold render -f ${currentPath}`, (error, stdout, stderr) => {
+			  exec(command, (error, stdout, stderr) => {
 					if (error) {
 						console.error(`exec error: ${error}`);
+						vscode.window.showErrorMessage("Skaffold render failed: " + stderr);
 						return;
 					}
-					console.log(`stdout: ${stdout}`);
-					console.error(`stderr: ${stderr}`);	
+
+					vscode.window.showInformationMessage("Skaffold render successful");
+
+					const panel = vscode.window.createWebviewPanel(
+						'skaffold-preview',
+						'Skaffold Preview',
+						vscode.ViewColumn.Beside,
+						{}
+					)
+
+					const escapedStdout = escapeHtml(stdout)
+	
+					panel.webview.html = `
+					<html>
+						<body>
+							<pre>${escapedStdout}</pre>
+						</body>
+					</html>
+				`;
 				})
 
-        // エディターを縦に分割してレンダリング結果を表示
-        const panel = vscode.window.createWebviewPanel(
-					'skaffold-preview',
-					'Skaffold Preview',
-					vscode.ViewColumn.Beside,
-					{}
-				)
-
-				panel.webview.html = `
-					YES
-				`
       } catch (e) {
         vscode.window.showErrorMessage("Failed to parse YAML file");
       }
@@ -47,7 +73,10 @@ export function activate(context: vscode.ExtensionContext) {
 	button.command = "extension.renderSkaffold"
 	button.text = "$(button-icon) Render Skaffold"
 	context.subscriptions.push(button)
-	button.show()
+
+	vscode.window.onDidChangeActiveTextEditor((editor) => {
+    updateStatusBarItem(editor, button);
+  });
 }
 
 export function deactivate() {}
