@@ -1,71 +1,39 @@
-# skaffold-preview README
+# Skaffold Preview VS Code Extension
 
-This is the README for your extension "skaffold-preview". After writing up a brief description, we recommend including the following sections.
+The Skaffold Render VS Code Extension is a powerful tool designed to render Skaffold manifests directly within Visual Studio Code, offering developers working with Kubernetes an efficient way to generate and preview manifests without leaving the editor.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Intuitive Manifest Rendering: Directly render manifests from the currently open Skaffold YAML file and preview the results in a dedicated panel.
+- Status Bar Shortcut: A convenient button in the VS Code status bar allows for easy execution of the Skaffold render command. This button is displayed only when a YAML file is open.
+- Error Handling and Messaging: Errors encountered during the rendering process are clearly communicated, facilitating troubleshooting.
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Install the Extension: Search for "Skaffold Render Extension" in the Visual Studio Code Extensions Marketplace and install it.
+2. Open a Skaffold YAML File: Open the Skaffold YAML file you wish to render in the editor.
+3. Execute Rendering: Click the "Render Skaffold" button in the status bar or execute the "Render Skaffold" command from the Command Palette (Ctrl+Shift+P / Cmd+Shift+P).
+4. Preview Results: Upon successful rendering, the generated manifest content is previewed in a new editor tab.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Prerequisites
 
-## Requirements
+To use this extension, the following must be installed:
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- Visual Studio Code
+- Skaffold CLI
 
-## Extension Settings
+## Installation
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Open the Extensions view in Visual Studio Code and search for "Skaffold Preview" to install.
 
-For example:
+## Configuration
 
-This extension contributes the following settings:
+This extension works out of the box and does not require additional configuration. However, depending on your Skaffold setup or project configuration, you might want to customize the path to the Skaffold CLI or its options.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Support
 
-## Known Issues
+If you encounter any issues or have feature requests, please create an Issue on the GitHub repository page.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Contributions
 
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Contributions to this project are welcome. Feel free to submit pull requests, feature suggestions, or any other feedback.
