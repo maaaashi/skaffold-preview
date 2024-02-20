@@ -1,26 +1,53 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import { exec } from "child_process";
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  let disposable = vscode.commands.registerCommand(
+    "extension.renderSkaffold",
+    () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        vscode.window.showInformationMessage("No editor is active");
+        return;
+      }
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "skaffold-preview" is now active!');
+      const text = editor.document.getText();
+      try {
+				const currentPath = editor.document.uri.fsPath
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('skaffold-preview.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from skaffold-preview!!!!!');
-	});
+			  exec(`skaffold render -f ${currentPath}`, (error, stdout, stderr) => {
+					if (error) {
+						console.error(`exec error: ${error}`);
+						return;
+					}
+					console.log(`stdout: ${stdout}`);
+					console.error(`stderr: ${stderr}`);	
+				})
 
-	context.subscriptions.push(disposable);
+        // エディターを縦に分割してレンダリング結果を表示
+        const panel = vscode.window.createWebviewPanel(
+					'skaffold-preview',
+					'Skaffold Preview',
+					vscode.ViewColumn.Beside,
+					{}
+				)
+
+				panel.webview.html = `
+					YES
+				`
+      } catch (e) {
+        vscode.window.showErrorMessage("Failed to parse YAML file");
+      }
+    }
+  );
+
+  context.subscriptions.push(disposable);
+
+	const button = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 0)
+	button.command = "extension.renderSkaffold"
+	button.text = "$(button-icon) Render Skaffold"
+	context.subscriptions.push(button)
+	button.show()
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
