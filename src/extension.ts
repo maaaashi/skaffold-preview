@@ -73,6 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
 	button.command = "extension.renderSkaffold"
 	button.text = "$(button-icon) Render Skaffold"
 	context.subscriptions.push(button)
+	button.show()
 
 	vscode.window.onDidChangeActiveTextEditor((editor) => {
     updateStatusBarItem(editor, button);
