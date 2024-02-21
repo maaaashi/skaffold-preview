@@ -3,7 +3,7 @@
   "displayName": "skaffold-preview",
   "publisher": "maaaashi",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "icon": "docs/skaffold-preview-logo.png",
   "repository": {
     "type" : "git",
