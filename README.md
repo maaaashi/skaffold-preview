@@ -1,3 +1,5 @@
+![skaffold-preview](docs/skaffold-preview.png)
+
 # Skaffold Preview VS Code Extension
 
 The Skaffold Render VS Code Extension is a powerful tool designed to render Skaffold manifests directly within Visual Studio Code, offering developers working with Kubernetes an efficient way to generate and preview manifests without leaving the editor.

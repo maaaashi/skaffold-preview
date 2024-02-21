@@ -3,7 +3,12 @@
   "displayName": "skaffold-preview",
   "publisher": "maaaashi",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "icon": "docs/skaffold-preview-logo.png",
+  "repository": {
+    "type" : "git",
+    "url": "https://github.com/maaaashi/skaffold-preview"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
