@@ -33,22 +33,21 @@ export function activate(context: vscode.ExtensionContext) {
 				const currentFilePath = editor.document.uri.fsPath
 				const directoryPath = path.dirname(currentFilePath);
 				const command = `cd ${directoryPath} && skaffold render -f ${currentFilePath}`
+        const panel = vscode.window.createWebviewPanel(
+          'skaffold-preview',
+          'Skaffold Preview',
+          vscode.ViewColumn.Beside,
+          {}
+        )
 
+        panel.webview.html = `
+          <html>
+            <body>
+              読み込み中...
+            </body>
+          </html>
+        `
 			  exec(command, (error, stdout, stderr) => {
-          const panel = vscode.window.createWebviewPanel(
-            'skaffold-preview',
-            'Skaffold Preview',
-            vscode.ViewColumn.Beside,
-            {}
-          )
-
-          panel.webview.html = `
-					  <html>
-						  <body>
-							  読み込み中...
-						  </body>
-					  </html>
-				  `
 					if (error) {
             console.error(`exec error: ${error}`);
 						vscode.window.showErrorMessage("Skaffold render failed: " + stderr);
