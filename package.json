@@ -1,6 +1,7 @@
 {
   "name": "skaffold-preview",
   "displayName": "skaffold-preview",
+  "publisher": "maaaashi",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -21,7 +22,7 @@
       }
     ],
     "icons": {
-      "button-icon":{
+      "button-icon": {
         "description": "Button Icon",
         "default": {
           "fontPath": "assets/icomoon.woff",
@@ -48,7 +49,8 @@
     "@vscode/test-cli": "^0.0.4",
     "@vscode/test-electron": "^2.3.9",
     "eslint": "^8.56.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vsce": "^2.15.0"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
