@@ -1,7 +1,6 @@
 import { exec } from "child_process";
 import * as vscode from "vscode";
 import { createHTML } from "../libs/createHTML";
-import { currentFilePath, directoryPath } from "../libs/path";
 import path from "path";
 
 export class Preview {
@@ -13,7 +12,7 @@ export class Preview {
 		this.panel = panel;
 		this.editor = vscode.window.activeTextEditor;
 		this.currentPath = this.editor?.document.uri.fsPath || "";
-		this.directoryPath = path.dirname(currentFilePath || "");
+		this.directoryPath = path.dirname(this.currentPath || "");
 	}
 
 	private exec(command: string) {
@@ -31,12 +30,12 @@ export class Preview {
 	}
 
 	public render() {
-		const command = `cd ${directoryPath} && skaffold render -f ${currentFilePath}`;
+		const command = `cd ${this.directoryPath} && skaffold render -f ${this.currentPath}`;
 		this.exec(command);
 	}
 
 	public profileRender(profile: string) {
-		const command = `cd ${directoryPath} && skaffold render -f ${currentFilePath} -p ${profile}`;
+		const command = `cd ${this.directoryPath} && skaffold render -f ${this.currentPath} -p ${profile}`;
 		this.exec(command);
 	}
 }
