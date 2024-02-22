@@ -1,70 +1,66 @@
 {
-  "name": "skaffold-preview",
-  "displayName": "skaffold-preview",
-  "publisher": "maaaashi",
-  "description": "",
-  "version": "0.0.4",
-  "icon": "docs/skaffold-preview-logo.png",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/maaaashi/skaffold-preview"
-  },
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onLanguage:yaml"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "extension.skaffoldPreview",
-        "title": "Skaffold Preview"
-      },
-      {
-        "command": "extension.customSkaffoldPreview",
-        "title": "Custom Skaffold Preview"
-      }
-    ],
-    "icons": {
-      "button-icon": {
-        "description": "Button Icon",
-        "default": {
-          "fontPath": "assets/icomoon.woff",
-          "fontCharacter": "\\E900"
-        }
-      }
-    }
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run fmt && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "fmt": "biome format --write ./src",
-    "test": "vscode-test"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.5.3",
-    "@types/js-yaml": "^4.0.9",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "18.x",
-    "@types/vscode": "^1.85.0",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
-    "@typescript-eslint/parser": "^6.19.1",
-    "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.9",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
-    "vsce": "^2.15.0"
-  },
-  "dependencies": {
-    "js-yaml": "^4.1.0"
-  }
+	"name": "skaffold-preview",
+	"displayName": "skaffold-preview",
+	"publisher": "maaaashi",
+	"description": "",
+	"version": "0.0.5",
+	"icon": "docs/skaffold-preview-logo.png",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/maaaashi/skaffold-preview"
+	},
+	"engines": {
+		"vscode": "^1.85.0"
+	},
+	"categories": ["Other"],
+	"activationEvents": ["onLanguage:yaml"],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.skaffoldPreview",
+				"title": "Skaffold Preview"
+			},
+			{
+				"command": "extension.profileSkaffoldPreview",
+				"title": "Skaffold Preview With Profile"
+			}
+		],
+		"icons": {
+			"button-icon": {
+				"description": "Button Icon",
+				"default": {
+					"fontPath": "assets/icomoon.woff",
+					"fontCharacter": "\\E900"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run fmt && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"fmt": "biome format --write ./src",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.5.3",
+		"@types/js-yaml": "^4.0.9",
+		"@types/mocha": "^10.0.6",
+		"@types/node": "18.x",
+		"@types/vscode": "^1.85.0",
+		"@typescript-eslint/eslint-plugin": "^6.19.1",
+		"@typescript-eslint/parser": "^6.19.1",
+		"@vscode/test-cli": "^0.0.4",
+		"@vscode/test-electron": "^2.3.9",
+		"eslint": "^8.56.0",
+		"typescript": "^5.3.3",
+		"vsce": "^2.15.0"
+	},
+	"dependencies": {
+		"js-yaml": "^4.1.0"
+	}
 }
