@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { createHTML } from "../libs/createHTML";
-import { render } from "../libs/render";
+import { Render } from "../logic/render";
 
 export const addSkaffoldPreview = (context: vscode.ExtensionContext) => {
 	const skaffoldPreview = vscode.commands.registerCommand(
@@ -22,7 +22,8 @@ export const addSkaffoldPreview = (context: vscode.ExtensionContext) => {
 
 				panel.webview.html = createHTML("読み込み中...");
 
-				render(panel);
+				const render = new Render(panel);
+				render.exec();
 			} catch (e) {
 				vscode.window.showErrorMessage("Failed to parse YAML file");
 			}
