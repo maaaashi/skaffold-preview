@@ -7,7 +7,7 @@
   "icon": "docs/skaffold-preview-logo.png",
   "license": "MIT",
   "repository": {
-    "type" : "git",
+    "type": "git",
     "url": "https://github.com/maaaashi/skaffold-preview"
   },
   "engines": {
@@ -41,11 +41,13 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "npm run fmt && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
+    "fmt": "biome format --write ./src",
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
