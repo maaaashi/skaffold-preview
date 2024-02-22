@@ -23,8 +23,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.renderSkaffold",
-        "title": "Render Skaffold YAML"
+        "command": "extension.skaffoldPreview",
+        "title": "Skaffold Preview"
+      },
+      {
+        "command": "extension.customSkaffoldPreview",
+        "title": "Custom Skaffold Preview"
       }
     ],
     "icons": {
