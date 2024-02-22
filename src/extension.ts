@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 				panel.webview.html = createHTML("読み込み中...");
 
-				render(panel)
+				render(panel);
 			} catch (e) {
 				vscode.window.showErrorMessage("Failed to parse YAML file");
 			}

@@ -3,15 +3,6 @@ import * as vscode from "vscode";
 import { createHTML } from "./createHTML";
 import path from "path";
 
-function escapeHtml(unsafeText: string) {
-	return unsafeText
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#039;");
-}
-
 export const render = (panel: vscode.WebviewPanel) => {
 	const editor = vscode.window.activeTextEditor!;
 	const currentFilePath = editor.document.uri.fsPath;
@@ -27,7 +18,6 @@ export const render = (panel: vscode.WebviewPanel) => {
 		}
 
 		vscode.window.showInformationMessage("Skaffold render successful");
-
-		panel.webview.html = createHTML(`<pre>${escapeHtml(stderr)}</pre>`);
+		panel.webview.html = createHTML(stdout);
 	});
 };
