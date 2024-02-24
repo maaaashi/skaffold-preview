@@ -1,20 +1,43 @@
 @startuml Architechture
 
-class Function {
-  + editor: vscode.TextEditor
-  + command: string
-  + exec(): void
+package VSCodeFunction {
+  abstract class FunctionBase {
+    # editor: vscode.TextEditor
+    # command: string
+    # disposable: vscode.Disposable
+  }
+
+  class SkaffoldPreviewFunction {
+    {static} create(): SkaffoldPreviewFunction
+  }
+
+  class ProfileSkaffoldPreviewFunction {
+    {static} create(): ProfileSkaffoldPreviewFunction
+  }
 }
 
-class Prevew {
-  + editor: vscode.TextEditor
-  + currentPath: string
-  + directoryPath: string
+FunctionBase <|-- SkaffoldPreviewFunction
+FunctionBase <|-- ProfileSkaffoldPreviewFunction
 
-  + exec(): void
-  + render(): void
-  + profileRender(): void
+package Skaffold {
+  abstract class RenderBase {
+
+  }
+
+  class ProfileRender {
+
+  }
+
+  class Render {
+
+  }
+
+  RenderBase <|-up- Render
+  RenderBase <|-up- ProfileRender
 }
+
+Render <-up- SkaffoldPreviewFunction
+ProfileRender <-up- ProfileSkaffoldPreviewFunction
 
 class StatusBarItem {
   + command: string
@@ -23,9 +46,9 @@ class StatusBarItem {
 
 class Extension {
   + context: vscode.ExtensionContext
-  + addSubscriptions(): void
+  + addSubscriptions(funcion: FunctionBase): void
 }
 
-Function --> Prevew
+Extension -down-> FunctionBase
 
 @enduml
