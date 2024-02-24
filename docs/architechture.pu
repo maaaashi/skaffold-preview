@@ -46,7 +46,7 @@ class StatusBarItem {
 
 class Extension {
   + context: vscode.ExtensionContext
-  + addSubscriptions(funcion: FunctionBase): void
+  + addFunctions(funcion: FunctionBase): void
 }
 
 Extension -down-> FunctionBase
