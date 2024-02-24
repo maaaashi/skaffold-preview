@@ -47,8 +47,10 @@ class StatusBarItem {
 class Extension {
   + context: vscode.ExtensionContext
   + addFunctions(funcion: FunctionBase): void
+  + addStatusBarItem(statusBarItem: StatusBarItem): void
 }
 
 Extension -down-> FunctionBase
+Extension -down-> StatusBarItem
 
 @enduml
