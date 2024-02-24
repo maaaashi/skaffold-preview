@@ -1,0 +1,31 @@
+@startuml Architechture
+
+class Function {
+  + editor: vscode.TextEditor
+  + command: string
+  + exec(): void
+}
+
+class Prevew {
+  + editor: vscode.TextEditor
+  + currentPath: string
+  + directoryPath: string
+
+  + exec(): void
+  + render(): void
+  + profileRender(): void
+}
+
+class StatusBarItem {
+  + command: string
+  + text: string
+}
+
+class Extension {
+  + context: vscode.ExtensionContext
+  + addSubscriptions(): void
+}
+
+Function --> Prevew
+
+@enduml
