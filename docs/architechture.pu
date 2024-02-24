@@ -1,10 +1,21 @@
 @startuml Architechture
 
-package VSCodeFunction {
+package VSCode {
+  class Viewer {
+    {static} createHtml(body: string): string
+    {static} escapeHtml(body: string): string
+  }
+
+  class Panel {
+    + create(title: string): vscode.WebviewPanel
+  }
+}
+
+package Function {
   abstract class FunctionBase {
     # editor: vscode.TextEditor
     # command: string
-    # disposable: vscode.Disposable
+    # disposable(): vscode.Disposable
   }
 
   class SkaffoldPreviewFunction {

@@ -1,9 +1,10 @@
 import { createHTML } from '../libs/createHTML'
-import { Function } from './function'
+import { FunctionBase } from './FunctionBase'
 import * as vscode from 'vscode'
 import { Preview } from '../logic/render'
+import { Panel } from '../vscode/Panel'
 
-export class SkaffoldPreviewFunctoin extends Function {
+export class SkaffoldPreviewFunctoin extends FunctionBase {
 	constructor() {
 		super('extension.skaffoldPreview')
 	}
@@ -17,18 +18,14 @@ export class SkaffoldPreviewFunctoin extends Function {
 			'extension.skaffoldPreview',
 			async () => {
 				const editor = vscode.window.activeTextEditor
+
 				if (!editor) {
 					vscode.window.showInformationMessage('No editor is active')
 					return
 				}
 
 				try {
-					const panel = vscode.window.createWebviewPanel(
-						'skaffold-preview',
-						'Skaffold Preview',
-						vscode.ViewColumn.Beside,
-						{},
-					)
+					const panel = Panel.create('Skaffold Preview')
 
 					panel.webview.html = createHTML('読み込み中...')
 

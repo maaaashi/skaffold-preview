@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 
-export abstract class Function {
+export abstract class FunctionBase {
 	protected editor: vscode.TextEditor | undefined
 
 	constructor(protected command: string) {

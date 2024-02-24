@@ -1,10 +1,10 @@
 import { Disposable } from 'vscode'
-import { Function } from './function'
+import { FunctionBase } from './FunctionBase'
 import * as vscode from 'vscode'
 import { createHTML } from '../libs/createHTML'
 import { Preview } from '../logic/render'
 
-export class ProfileSkaffoldPreviewFunction extends Function {
+export class ProfileSkaffoldPreviewFunction extends FunctionBase {
 	constructor() {
 		super('extension.skaffoldPreview')
 	}
