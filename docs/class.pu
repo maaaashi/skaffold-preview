@@ -1,0 +1,42 @@
+@startuml
+
+package Usecase #FFAAAA {
+  class SkaffoldPreviewUsecase {
+    - inputPort: SkaffoldPreviewServiceInputPort
+    + exec(): void
+  }
+
+  class SkaffoldProfilePreviewUsecase {
+    - inputPort: SkaffoldProfilePreviewServiceInputPort
+    + exec(): void
+  }
+}
+
+package Service #AAFFAA {
+  interface SkaffoldPreviewServiceInputPort {
+    + render(): void
+  }
+
+  class SkaffoldPreviewService {
+    +
+  }
+
+  SkaffoldPreviewServiceInputPort <-up- SkaffoldPreviewUsecase
+  SkaffoldPreviewServiceInputPort <|-down- SkaffoldPreviewService
+
+  class SkaffoldProfilePreviewService {
+
+  }
+
+  SkaffoldPreviewServiceInputPort <-up- SkaffoldProfilePreviewUsecase
+  SkaffoldPreviewServiceInputPort <|-down- SkaffoldProfilePreviewService
+}
+
+package Domain #FFFFAA {
+  class SkaffoldRender {
+    + render(): void
+    + profileRender(): void
+  }
+}
+
+@enduml
