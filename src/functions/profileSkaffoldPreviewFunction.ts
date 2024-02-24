@@ -1,5 +1,5 @@
 import { Disposable } from 'vscode'
-import { Function } from '../logic/function'
+import { Function } from './function'
 import * as vscode from 'vscode'
 import { createHTML } from '../libs/createHTML'
 import { Preview } from '../logic/render'
