@@ -2,7 +2,7 @@
 
 package Usecase #FFAAAA {
   interface SkaffoldPreviewInterface {
-    + exec(): void
+    + disposable(): vscode.Disposable
   }
 
   class SkaffoldPreviewUsecase {
