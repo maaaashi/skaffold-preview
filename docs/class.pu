@@ -1,24 +1,28 @@
 @startuml
 
 package Usecase #FFAAAA {
+  interface SkaffoldPreviewInterface {
+    + exec(): void
+  }
+
   class SkaffoldPreviewUsecase {
     - inputPort: SkaffoldPreviewServiceInputPort
-    + exec(): void
   }
 
   class SkaffoldProfilePreviewUsecase {
     - inputPort: SkaffoldProfilePreviewServiceInputPort
-    + exec(): void
   }
+
+  SkaffoldPreviewInterface <|-down- SkaffoldPreviewUsecase
+  SkaffoldPreviewInterface <|-down- SkaffoldProfilePreviewUsecase
 }
 
 package Service #AAFFAA {
   interface SkaffoldPreviewServiceInputPort {
-    + render(): void
+    + render(panel: vscode.WebviewPanel): void
   }
 
   class SkaffoldPreviewService {
-    +
   }
 
   SkaffoldPreviewServiceInputPort <-up- SkaffoldPreviewUsecase
@@ -37,6 +41,7 @@ package Domain #FFFFAA {
     + render(): void
     + profileRender(): void
   }
+
 }
 
 @enduml

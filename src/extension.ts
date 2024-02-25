@@ -1,16 +1,17 @@
 import * as vscode from 'vscode'
 import { addStatusBarButton } from './function/AddStatusBarButton'
 import { Extension } from './logic/extension'
-import { SkaffoldPreviewFunctoin } from './function/SkaffoldPreviewFunction'
-import { ProfileSkaffoldPreviewFunction } from './function/ProfileSkaffoldPreviewFunction'
+import { SkaffoldPreviewUsecase } from './Usecase/SkaffoldPreviewUsecase'
+import { SkaffoldPreviewService } from './Service/SkaffoldPreviewService'
 
 export function activate(context: vscode.ExtensionContext) {
 	const extension = Extension.create(context)
-	const skaffoldPreviewFunction = SkaffoldPreviewFunctoin.create()
-	extension.addSubscription(skaffoldPreviewFunction.disposable())
+	const skaffoldPreviewService = new SkaffoldPreviewService()
+	const skaffoldPreviewUsecase = new SkaffoldPreviewUsecase(
+		skaffoldPreviewService,
+	)
 
-	const profileSkaffoldPreview = ProfileSkaffoldPreviewFunction.create()
-	extension.addSubscription(profileSkaffoldPreview.disposable())
+	extension.addSubscription(skaffoldPreviewUsecase.disposable())
 
 	addStatusBarButton(context)
 }

@@ -1,3 +1,5 @@
+import * as vscode from 'vscode'
+
 export interface SkaffoldPreviewServiceInputPort {
-	render(): void
+	render(panel: vscode.WebviewPanel): void
 }

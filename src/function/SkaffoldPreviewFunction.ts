@@ -2,7 +2,7 @@ import { createHTML } from '../libs/createHTML'
 import { FunctionBase } from './FunctionBase'
 import * as vscode from 'vscode'
 import { Preview } from '../logic/render'
-import { Panel } from '../vscode/Panel'
+import { Panel } from '../domains/Panel'
 
 export class SkaffoldPreviewFunctoin extends FunctionBase {
 	constructor() {
