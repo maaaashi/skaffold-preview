@@ -1,8 +1,11 @@
-import { WebviewPanel } from 'vscode'
-import { SkaffoldPreviewServiceInputPort } from './Port/SkaffoldServiceInputPort'
+import { Disposable } from 'vscode'
+import { SkaffoldPreviewServicePort } from './Port/SkaffoldPreviewServicePort'
+import { SkaffoldPreviewLogicPort } from '../Logic/Port/SkaffoldPreviewLogicPort'
 
-export class SkaffoldPreviewService implements SkaffoldPreviewServiceInputPort {
-	render(panel: WebviewPanel): void {
+export class SkaffoldPreviewService implements SkaffoldPreviewServicePort {
+	constructor(private inputPort: SkaffoldPreviewLogicPort) {}
+
+	disposable(): Disposable {
 		throw new Error('Method not implemented.')
 	}
 }

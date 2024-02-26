@@ -1,48 +1,36 @@
 @startuml
 
-package Extension #AAAAFF {
+package VSCode #AAAAFF {
   class Extension {
     + context: vscode.ExtensionContext
     + addSubscription(subscription: vscode.Disposable): void
   }
 }
 
-package Usecase #FFAAAA {
-  interface SkaffoldPreviewInterface {
+package Service #FFAAAA {
+  interface SkaffoldPreviewServicePort {
     + disposable(): vscode.Disposable
   }
 
-  class SkaffoldPreviewUsecase {
-    - inputPort: SkaffoldPreviewGatewayInputPort
+  class SkaffoldPreviewService {
+    - inputPort: SkaffoldPreviewLogicPort
   }
 
-  class SkaffoldProfilePreviewUsecase {
-    - inputPort: SkaffoldProfilePreviewGatewayInputPort
-  }
-
-  SkaffoldPreviewInterface <|-down- SkaffoldPreviewUsecase
-  SkaffoldPreviewInterface <|-down- SkaffoldProfilePreviewUsecase
+  SkaffoldPreviewServicePort <|-down- SkaffoldPreviewService
 }
 
-SkaffoldPreviewInterface <-up- Extension
+SkaffoldPreviewServicePort <-up- Extension
 
-package Gateway #AAFFAA {
-  interface SkaffoldPreviewGatewayInputPort {
+package Logic #AAFFAA {
+  interface SkaffoldPreviewLogicPort {
     + render(panel: vscode.WebviewPanel): void
   }
 
-  class SkaffoldPreviewGateway {
+  class SkaffoldPreviewLogic {
   }
 
-  SkaffoldPreviewGatewayInputPort <-up- SkaffoldPreviewUsecase
-  SkaffoldPreviewGatewayInputPort <|-down- SkaffoldPreviewGateway
-
-  class SkaffoldProfilePreviewGateway {
-
-  }
-
-  SkaffoldPreviewGatewayInputPort <-up- SkaffoldProfilePreviewUsecase
-  SkaffoldPreviewGatewayInputPort <|-down- SkaffoldProfilePreviewGateway
+  SkaffoldPreviewLogicPort <|-down- SkaffoldPreviewLogic
+  SkaffoldPreviewLogicPort <-up- SkaffoldPreviewService
 }
 
 package Domain #FFFFAA {
@@ -52,7 +40,7 @@ package Domain #FFFFAA {
   }
 }
 
-package Skaffold #AAAAFF {
+package Driver #AAAAFF {
   class Skaffold {
     + command: string
     + profile: string[]
@@ -60,6 +48,8 @@ package Skaffold #AAAAFF {
     + render(): string
   }
 }
+
+Skaffold <-up- SkaffoldPreviewLogic
 
 
 @enduml

@@ -13,12 +13,8 @@
 	"engines": {
 		"vscode": "^1.85.0"
 	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onLanguage:yaml"
-	],
+	"categories": ["Other"],
+	"activationEvents": ["onLanguage:yaml"],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
