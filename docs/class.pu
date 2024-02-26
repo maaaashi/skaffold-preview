@@ -1,5 +1,12 @@
 @startuml
 
+package Extension #AAAAFF {
+  class Extension {
+    + context: vscode.ExtensionContext
+    + addSubscription(subscription: vscode.Disposable): void
+  }
+}
+
 package Usecase #FFAAAA {
   interface SkaffoldPreviewInterface {
     + disposable(): vscode.Disposable
@@ -16,6 +23,8 @@ package Usecase #FFAAAA {
   SkaffoldPreviewInterface <|-down- SkaffoldPreviewUsecase
   SkaffoldPreviewInterface <|-down- SkaffoldProfilePreviewUsecase
 }
+
+SkaffoldPreviewInterface <-up- Extension
 
 package Service #AAFFAA {
   interface SkaffoldPreviewServiceInputPort {
