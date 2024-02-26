@@ -13,11 +13,11 @@ package Usecase #FFAAAA {
   }
 
   class SkaffoldPreviewUsecase {
-    - inputPort: SkaffoldPreviewServiceInputPort
+    - inputPort: SkaffoldPreviewGatewayInputPort
   }
 
   class SkaffoldProfilePreviewUsecase {
-    - inputPort: SkaffoldProfilePreviewServiceInputPort
+    - inputPort: SkaffoldProfilePreviewGatewayInputPort
   }
 
   SkaffoldPreviewInterface <|-down- SkaffoldPreviewUsecase
@@ -26,23 +26,23 @@ package Usecase #FFAAAA {
 
 SkaffoldPreviewInterface <-up- Extension
 
-package Service #AAFFAA {
-  interface SkaffoldPreviewServiceInputPort {
+package Gateway #AAFFAA {
+  interface SkaffoldPreviewGatewayInputPort {
     + render(panel: vscode.WebviewPanel): void
   }
 
-  class SkaffoldPreviewService {
+  class SkaffoldPreviewGateway {
   }
 
-  SkaffoldPreviewServiceInputPort <-up- SkaffoldPreviewUsecase
-  SkaffoldPreviewServiceInputPort <|-down- SkaffoldPreviewService
+  SkaffoldPreviewGatewayInputPort <-up- SkaffoldPreviewUsecase
+  SkaffoldPreviewGatewayInputPort <|-down- SkaffoldPreviewGateway
 
-  class SkaffoldProfilePreviewService {
+  class SkaffoldProfilePreviewGateway {
 
   }
 
-  SkaffoldPreviewServiceInputPort <-up- SkaffoldProfilePreviewUsecase
-  SkaffoldPreviewServiceInputPort <|-down- SkaffoldProfilePreviewService
+  SkaffoldPreviewGatewayInputPort <-up- SkaffoldProfilePreviewUsecase
+  SkaffoldPreviewGatewayInputPort <|-down- SkaffoldProfilePreviewGateway
 }
 
 package Domain #FFFFAA {
@@ -50,7 +50,16 @@ package Domain #FFFFAA {
     + render(): void
     + profileRender(): void
   }
-
 }
+
+package Skaffold #AAAAFF {
+  class Skaffold {
+    + command: string
+    + profile: string[]
+
+    + render(): string
+  }
+}
+
 
 @enduml
