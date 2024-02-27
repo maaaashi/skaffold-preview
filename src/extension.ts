@@ -1,29 +1,18 @@
 import * as vscode from 'vscode'
 import { Extension } from './VSCode/Extension'
-import { SkaffoldPreviewLogic } from './Logic/SkaffoldPreviewLogic'
-import { SkaffoldPreviewService } from './Service/SkaffoldPreviewService'
-import { SkaffoldProfilePreviewService } from './Service/SkaffoldProfilePreviewService'
-import { SkaffoldProfilePreviewLogic } from './Logic/SkaffoldProfilePreviewLogic'
+import { SkaffoldPreviewGateway } from './Gateway/SkaffoldPreviewGateway'
+import { SkaffoldPreviewUsecase } from './Usecase/SkaffoldPreviewUsecase'
 
 export function activate(context: vscode.ExtensionContext) {
 	const extension = new Extension(context)
 
 	// Skaffold Render
-	const skaffoldPreviewLogic = new SkaffoldPreviewLogic()
-	const skaffoldPreviewService = new SkaffoldPreviewService(
-		skaffoldPreviewLogic,
+	const skaffoldPreviewGateway = new SkaffoldPreviewGateway({})
+	const skaffoldPreviewUsecase = new SkaffoldPreviewUsecase(
+		skaffoldPreviewGateway,
 	)
-	const skaffoldPreviewDisposable = skaffoldPreviewService.disposable()
-	extension.addSubscriptions(skaffoldPreviewDisposable)
 
-	// Profile Skaffold Render
-	const skaffoldProfilePreviewLogic = new SkaffoldProfilePreviewLogic()
-	const skaffoldProfilePreviewService = new SkaffoldProfilePreviewService(
-		skaffoldProfilePreviewLogic,
-	)
-	const skaffoldProfilePreviewDisposable =
-		skaffoldProfilePreviewService.disposable()
-	extension.addSubscriptions(skaffoldProfilePreviewDisposable)
+	extension.addSubscriptions(skaffoldPreviewUsecase.disposable())
 }
 
 export function deactivate() {}
