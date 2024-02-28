@@ -1,0 +1,69 @@
+@startuml
+
+package VSCode #AAAAFF {
+  class Extension {
+    - context: vscode.ExtensionContext
+    + addSubscription(subscription: vscode.Disposable): void
+  }
+}
+
+package Domain #FFFFAA {
+  class Skaffoldpreview {
+    - profile: string[]
+    - currentPath: string
+    - targetFile: string
+  }
+
+  class RenderException {
+    + message
+  }
+}
+
+note right of Extension
+  VSCodeのExtensionの追加
+end note
+
+package Usecase #FFAAAA {
+  class SkaffoldPreviewUsecase {
+    - gateway: SkaffoldPreviewGateway
+    - panel: vscode.WebviewPanel
+    + exec(): void
+  }
+}
+
+note right of SkaffoldPreviewUsecase
+  GatewayからDomainを取得して、
+  Panelに表示する
+end note
+
+SkaffoldPreviewUsecase <-up- Extension
+
+package Gateway #AAFFAA {
+  class SkaffoldPreviewGateway {
+    - driver: SkaffoldCLI
+    + exec(panel: vscode.WebviewPanel): RenderResult
+  }
+
+  SkaffoldPreviewGateway <-up- SkaffoldPreviewUsecase
+}
+
+note right of SkaffoldPreviewGateway
+  DriverからDataを受け取り、
+  Domainに変換して、Usecaseに返す
+end note
+
+package Driver #AAAAFF {
+  class SkaffoldCLI {
+    + profile: string[]
+    + render(commnad: string): Promise<string>
+  }
+}
+
+note right of SkaffoldCLI
+  Skaffold CLIを実行して、
+  Dataを取得する
+end note
+
+SkaffoldCLI <-up- SkaffoldPreviewGateway
+
+@enduml
