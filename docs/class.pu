@@ -11,7 +11,9 @@ package Domain #FFFFAA {
   class Skaffoldpreview {
     - profile: string[]
     - currentPath: string
-    - targetFile: string
+    - result: string
+
+    + getRenderProfileOption(): string
   }
 
   class RenderException {

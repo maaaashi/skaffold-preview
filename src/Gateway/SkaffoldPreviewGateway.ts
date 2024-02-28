@@ -17,13 +17,16 @@ export class SkaffoldPreviewGateway {
 		}
 
 		const currentPath = editor?.document.uri.fsPath || ''
-		const directoryPath = path.dirname(currentPath || '')
-		const profile = [].map((p) => `-p ${p}`).join(' ')
-		const command = `cd ${directoryPath} && skaffold render -f ${currentPath} ${profile}`
+		const skaffoldPreview = new SkaffoldPreview([], currentPath)
+
+		const directoryPath = path.dirname(skaffoldPreview.currentPath || '')
+		const command = `cd ${directoryPath} && skaffold render -f ${
+			skaffoldPreview.currentPath
+		} ${skaffoldPreview.getRenderProfileOption()}`
 
 		try {
-			const result = await this.driver.render(command)
-			return new SkaffoldPreview('', [], '', result)
+			skaffoldPreview.result = await this.driver.render(command)
+			return skaffoldPreview
 		} catch (error) {
 			throw new RenderException((error as ExecException).message)
 		}
