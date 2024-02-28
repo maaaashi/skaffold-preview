@@ -14,7 +14,7 @@ The Skaffold Render VS Code Extension is a powerful tool designed to render Skaf
 
 1. Install the Extension: Search for "skaffold-preview" in the Visual Studio Code Extensions Marketplace and install it.
 2. Open a Skaffold YAML File: Open the Skaffold YAML file you wish to render in the editor.
-3. Execute Rendering: Click the "Render Skaffold" button in the status bar or execute the "Render Skaffold YAML" command from the Command Palette (Ctrl+Shift+P / Cmd+Shift+P).
+3. Execute Rendering: execute the "Skaffold Preview" or "Skaffold Preview With Profile" command from the Command Palette (Ctrl+Shift+P).
 4. Preview Results: Upon successful rendering, the generated manifest content is previewed in a new editor tab.
 
 ![usage](docs/usage.gif)
