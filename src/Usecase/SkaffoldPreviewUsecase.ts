@@ -4,19 +4,20 @@ import { createHTML } from '../libs/createHTML'
 import { RenderException } from '../Domain/ExecException'
 
 export class SkaffoldPreviewUsecase {
-	private panel: WebviewPanel
+	private panel: WebviewPanel | undefined
 
 	constructor(private gateway: SkaffoldPreviewGateway) {
-		this.panel = window.createWebviewPanel(
-			'skaffold-preview',
-			'Skaffold Preview',
-			ViewColumn.Beside,
-			{},
-		)
+		this.panel = undefined
 	}
 
 	disposable(): Disposable {
 		return commands.registerCommand('extension.skaffoldPreview', async () => {
+			this.panel = window.createWebviewPanel(
+				'skaffold-preview',
+				'Skaffold Preview',
+				ViewColumn.Beside,
+				{},
+			)
 			this.panel.webview.html = createHTML('読み込み中...')
 
 			try {

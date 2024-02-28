@@ -2,8 +2,8 @@ export class SkaffoldPreview {
 	private _result: string
 
 	constructor(
-		private _profile: string[],
 		private _currentPath: string,
+		private _profile?: string,
 	) {
 		this._result = ''
 	}
@@ -20,7 +20,7 @@ export class SkaffoldPreview {
 		return this._currentPath
 	}
 
-	getRenderProfileOption(): string {
-		return this._profile.map((p) => `-p ${p}`).join(' ')
+	get profile(): string | undefined {
+		return this._profile
 	}
 }

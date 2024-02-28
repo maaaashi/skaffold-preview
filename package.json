@@ -3,7 +3,7 @@
 	"displayName": "skaffold-preview",
 	"publisher": "maaaashi",
 	"description": "",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"icon": "docs/skaffold-preview-logo.png",
 	"license": "MIT",
 	"repository": {
@@ -23,7 +23,7 @@
 				"title": "Skaffold Preview"
 			},
 			{
-				"command": "extension.profileSkaffoldPreview",
+				"command": "extension.skaffoldProfilePreview",
 				"title": "Skaffold Preview With Profile"
 			}
 		],

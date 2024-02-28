@@ -8,7 +8,7 @@ import type { ExecException } from 'child_process'
 export class SkaffoldPreviewGateway {
 	constructor(private driver: SkaffoldCLI) {}
 
-	async exec(): Promise<SkaffoldPreview> {
+	async exec(profile?: string): Promise<SkaffoldPreview> {
 		const editor = window.activeTextEditor
 
 		if (!editor) {
@@ -17,12 +17,12 @@ export class SkaffoldPreviewGateway {
 		}
 
 		const currentPath = editor?.document.uri.fsPath || ''
-		const skaffoldPreview = new SkaffoldPreview([], currentPath)
+		const skaffoldPreview = new SkaffoldPreview(currentPath, profile)
 
 		const directoryPath = path.dirname(skaffoldPreview.currentPath || '')
 		const command = `cd ${directoryPath} && skaffold render -f ${
 			skaffoldPreview.currentPath
-		} ${skaffoldPreview.getRenderProfileOption()}`
+		}${skaffoldPreview.profile ? ` -p ${skaffoldPreview.profile}` : ''}`
 
 		try {
 			skaffoldPreview.result = await this.driver.render(command)

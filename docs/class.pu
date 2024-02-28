@@ -43,7 +43,7 @@ SkaffoldPreviewUsecase <-up- Extension
 package Gateway #AAFFAA {
   class SkaffoldPreviewGateway {
     - driver: SkaffoldCLI
-    + exec(panel: vscode.WebviewPanel): RenderResult
+    + exec(profile?: string): RenderResult
   }
 
   SkaffoldPreviewGateway <-up- SkaffoldPreviewUsecase
