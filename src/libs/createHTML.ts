@@ -11,7 +11,7 @@ export const createHTML = (body: string) => {
 	return `
 <html>
   <body>
-    <pre>${escapeHtml(body)}<pre>
+    <pre>${escapeHtml(body)}</pre>
   </body>
 </html>
 `

@@ -2,12 +2,14 @@ import * as vscode from 'vscode'
 import { Extension } from './VSCode/Extension'
 import { SkaffoldPreviewGateway } from './Gateway/SkaffoldPreviewGateway'
 import { SkaffoldPreviewUsecase } from './Usecase/SkaffoldPreviewUsecase'
+import { SkaffoldCLI } from './Driver/SkaffoldCLI'
 
 export function activate(context: vscode.ExtensionContext) {
 	const extension = new Extension(context)
 
+	const skaffoldCliDriver = new SkaffoldCLI()
 	// Skaffold Render
-	const skaffoldPreviewGateway = new SkaffoldPreviewGateway({})
+	const skaffoldPreviewGateway = new SkaffoldPreviewGateway(skaffoldCliDriver)
 	const skaffoldPreviewUsecase = new SkaffoldPreviewUsecase(
 		skaffoldPreviewGateway,
 	)

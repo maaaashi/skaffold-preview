@@ -9,10 +9,13 @@ package VSCode #AAAAFF {
 
 package Domain #FFFFAA {
   class Skaffoldpreview {
-    - json: any
     - profile: string[]
     - currentPath: string
     - targetFile: string
+  }
+
+  class RenderException {
+    + message
   }
 }
 
@@ -38,7 +41,7 @@ SkaffoldPreviewUsecase <-up- Extension
 package Gateway #AAFFAA {
   class SkaffoldPreviewGateway {
     - driver: SkaffoldCLI
-    + exec(): RenderResult
+    + exec(panel: vscode.WebviewPanel): RenderResult
   }
 
   SkaffoldPreviewGateway <-up- SkaffoldPreviewUsecase
@@ -52,7 +55,7 @@ end note
 package Driver #AAAAFF {
   class SkaffoldCLI {
     + profile: string[]
-    + render(): string
+    + render(commnad: string): Promise<string>
   }
 }
 
@@ -62,6 +65,5 @@ note right of SkaffoldCLI
 end note
 
 SkaffoldCLI <-up- SkaffoldPreviewGateway
-
 
 @enduml
