@@ -9,11 +9,9 @@ package VSCode #AAAAFF {
 
 package Domain #FFFFAA {
   class Skaffoldpreview {
-    - profile: string[]
-    - currentPath: string
-    - result: string
-
-    + getRenderProfileOption(): string
+    - editor: TextEditor | undefined
+    - panel: WebviewPanel | undefined
+    - profile: string
   }
 
   class RenderException {
@@ -28,8 +26,8 @@ end note
 package Usecase #FFAAAA {
   class SkaffoldPreviewUsecase {
     - gateway: SkaffoldPreviewGateway
-    - panel: vscode.WebviewPanel
-    + exec(): void
+    - skaffoldPreview: SkaffoldPreview
+    + disposable(context: vscode.ExtensionContext): void
   }
 }
 
@@ -43,7 +41,7 @@ SkaffoldPreviewUsecase <-up- Extension
 package Gateway #AAFFAA {
   class SkaffoldPreviewGateway {
     - driver: SkaffoldCLI
-    + exec(profile?: string): RenderResult
+    + exec(skaffoldPreview: SkaffoldPreview): SkaffoldPreview
   }
 
   SkaffoldPreviewGateway <-up- SkaffoldPreviewUsecase
