@@ -44,7 +44,7 @@ export class SkaffoldPreviewUsecase {
         Panel.createPlainHTML('読み込み中...')
 
       const scriptPathOnDisk = Uri.file(
-        path.join(context.extensionPath, 'src', 'assets', 'script.js'),
+        path.join(context.extensionPath, 'media', 'script.js'),
       )
       const scriptUri =
         this.skaffoldPreview.panel.webview.asWebviewUri(scriptPathOnDisk)
