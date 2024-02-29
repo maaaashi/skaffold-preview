@@ -1,7 +1,5 @@
-import { exec as e, ExecException } from 'child_process'
-import path from 'path'
+import { exec as e } from 'child_process'
 import { window } from 'vscode'
-import { createHTML } from '../libs/createHTML'
 import * as util from 'util'
 
 const exec = util.promisify(e)
