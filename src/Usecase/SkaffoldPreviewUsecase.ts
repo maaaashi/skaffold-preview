@@ -59,12 +59,14 @@ export class SkaffoldPreviewUsecase {
           skaffoldPreview.result,
           scriptUri,
           profiles,
+          skaffoldPreview.profile,
         )
       } catch (error) {
         this.skaffoldPreview.panel.webview.html = Panel.createPreview(
           (error as RenderException).message,
           scriptUri,
           profiles,
+          this.skaffoldPreview.profile,
         )
       }
 
@@ -87,12 +89,14 @@ export class SkaffoldPreviewUsecase {
                 skaffoldPreview.result,
                 scriptUri,
                 profiles,
+                skaffoldPreview.profile,
               )
             } catch (error) {
               this.skaffoldPreview.panel.webview.html = Panel.createPreview(
                 (error as RenderException).message,
                 scriptUri,
                 profiles,
+                this.skaffoldPreview.profile,
               )
             }
           }

@@ -18,14 +18,22 @@ export const Panel = {
 </html>
 `
   },
-  createPreview(body: string, script: Uri, profiles: { name: string }[]) {
+  createPreview(
+    body: string,
+    script: Uri,
+    profiles: { name: string }[],
+    active: string,
+  ) {
     return `
 <html>
 	<body>
 		<select id="profile-dropdown">
 			<option value="">(profileを選択)</option>
 			${profiles.map(
-        (profile) => `<option value="${profile.name}">${profile.name}</option>`,
+        (profile) =>
+          `<option value="${profile.name}" ${
+            profile.name === active && 'selected'
+          }>${profile.name}</option>`,
       )}
 		</select>
     <pre>${this.escapeHtml(body)}</pre>
