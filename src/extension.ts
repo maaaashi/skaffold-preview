@@ -5,16 +5,15 @@ import { SkaffoldPreviewUsecase } from './Usecase/SkaffoldPreviewUsecase'
 import { SkaffoldCLI } from './Driver/SkaffoldCLI'
 
 export function activate(context: vscode.ExtensionContext) {
-	const extension = new Extension(context)
+  const extension = new Extension(context)
 
-	const skaffoldCliDriver = new SkaffoldCLI()
-	// Skaffold Preview
-	const skaffoldPreviewGateway = new SkaffoldPreviewGateway(skaffoldCliDriver)
-	const skaffoldPreviewUsecase = new SkaffoldPreviewUsecase(
-		skaffoldPreviewGateway,
-	)
+  const skaffoldCliDriver = new SkaffoldCLI()
+  const skaffoldPreviewGateway = new SkaffoldPreviewGateway(skaffoldCliDriver)
+  const skaffoldPreviewUsecase = new SkaffoldPreviewUsecase(
+    skaffoldPreviewGateway,
+  )
 
-	extension.addSubscriptions(skaffoldPreviewUsecase.disposable(context))
+  extension.addSubscriptions(skaffoldPreviewUsecase.disposable(context))
 }
 
 export function deactivate() {}

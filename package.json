@@ -21,10 +21,6 @@
 			{
 				"command": "extension.skaffoldPreview",
 				"title": "Skaffold Preview"
-			},
-			{
-				"command": "extension.skaffoldProfilePreview",
-				"title": "Skaffold Preview With Profile"
 			}
 		],
 		"icons": {

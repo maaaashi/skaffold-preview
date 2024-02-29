@@ -1,5 +1,5 @@
 export class RenderException extends Error {
-	constructor(public message: string) {
-		super(message)
-	}
+  constructor(public message: string) {
+    super(message)
+  }
 }
