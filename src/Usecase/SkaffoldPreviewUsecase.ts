@@ -40,14 +40,27 @@ export class SkaffoldPreviewUsecase {
         )
       }
 
-      this.skaffoldPreview.panel.webview.html =
-        Panel.createPlainHTML('読み込み中...')
-
       const scriptPathOnDisk = Uri.file(
         path.join(context.extensionPath, 'media', 'script.js'),
       )
       const scriptUri =
         this.skaffoldPreview.panel.webview.asWebviewUri(scriptPathOnDisk)
+
+      const stylePathOnDisk = Uri.file(
+        path.join(context.extensionPath, 'media', 'style.css'),
+      )
+      const styleUri =
+        this.skaffoldPreview.panel.webview.asWebviewUri(stylePathOnDisk)
+
+      const srcUrl = {
+        script: scriptUri,
+        style: styleUri,
+      }
+
+      this.skaffoldPreview.panel.webview.html = Panel.createPlainHTML(
+        '読み込み中...',
+        srcUrl,
+      )
 
       const text = this.skaffoldPreview.editor.document.getText()
       const json = yaml.load(text)
@@ -57,14 +70,14 @@ export class SkaffoldPreviewUsecase {
         const skaffoldPreview = await this.gateway.exec(this.skaffoldPreview)
         this.skaffoldPreview.panel.webview.html = Panel.createPreview(
           skaffoldPreview.result,
-          scriptUri,
+          srcUrl,
           profiles,
           skaffoldPreview.profile,
         )
       } catch (error) {
         this.skaffoldPreview.panel.webview.html = Panel.createPreview(
           (error as RenderException).message,
-          scriptUri,
+          srcUrl,
           profiles,
           this.skaffoldPreview.profile,
         )
@@ -78,8 +91,10 @@ export class SkaffoldPreviewUsecase {
           }
 
           if (message.command === 'dropdownChanged') {
-            this.skaffoldPreview.panel.webview.html =
-              Panel.createPlainHTML('読み込み中...')
+            this.skaffoldPreview.panel.webview.html = Panel.createPlainHTML(
+              '読み込み中...',
+              srcUrl,
+            )
             try {
               this.skaffoldPreview.profile = message.value
               const skaffoldPreview = await this.gateway.exec(
@@ -87,14 +102,14 @@ export class SkaffoldPreviewUsecase {
               )
               this.skaffoldPreview.panel.webview.html = Panel.createPreview(
                 skaffoldPreview.result,
-                scriptUri,
+                srcUrl,
                 profiles,
                 skaffoldPreview.profile,
               )
             } catch (error) {
               this.skaffoldPreview.panel.webview.html = Panel.createPreview(
                 (error as RenderException).message,
-                scriptUri,
+                srcUrl,
                 profiles,
                 this.skaffoldPreview.profile,
               )
