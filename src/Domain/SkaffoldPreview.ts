@@ -1,4 +1,5 @@
-import { TextEditor, WebviewPanel } from 'vscode'
+import { TextEditor, Uri, WebviewPanel } from 'vscode'
+import { escapeHtml } from '../Lib/Panel'
 
 export class SkaffoldPreview {
   private _result: string
@@ -45,5 +46,66 @@ export class SkaffoldPreview {
 
   set panel(p) {
     this._panel = p
+  }
+
+  loadingHTML(src: { script: Uri; style: Uri }) {
+    return `
+<html>
+  <head>
+    <link href="${src.style}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="preview">
+      <div class="spinner-box">
+        <div class="blue-orbit leo">
+        </div>
+      
+        <div class="green-orbit leo">
+        </div>
+        
+        <div class="red-orbit leo">
+        </div>
+        
+        <div class="white-orbit w1 leo">
+        </div><div class="white-orbit w2 leo">
+        </div><div class="white-orbit w3 leo">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+`
+  }
+
+  createPreviewHTML(
+    body: string,
+    src: { script: Uri; style: Uri },
+    profiles: { name: string }[],
+    active: string,
+  ) {
+    return `
+<html>
+  <head>
+    <link href="${src.style}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="header">
+      <select id="profile-dropdown">
+        <option value="">(profileを選択)</option>
+        ${profiles.map(
+          (profile) =>
+            `<option value="${profile.name}" ${
+              profile.name === active && 'selected'
+            }>${profile.name}</option>`,
+        )}
+      </select>
+    </div>
+    <div class="preview">
+      <pre>${escapeHtml(body)}</pre>
+    </div>
+  </body>
+  <script src="${src.script}"></script>
+</html>
+		`
   }
 }

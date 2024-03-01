@@ -8,7 +8,6 @@ import {
   ExtensionContext,
 } from 'vscode'
 import { RenderException } from '../Domain/ExecException'
-import { Panel } from '../Lib/Panel'
 import path from 'path'
 import { SkaffoldPreview } from '../Domain/SkaffoldPreview'
 import yaml from 'js-yaml'
@@ -57,10 +56,8 @@ export class SkaffoldPreviewUsecase {
         style: styleUri,
       }
 
-      this.skaffoldPreview.panel.webview.html = Panel.createPlainHTML(
-        '読み込み中...',
-        srcUrl,
-      )
+      this.skaffoldPreview.panel.webview.html =
+        this.skaffoldPreview.loadingHTML(srcUrl)
 
       const text = this.skaffoldPreview.editor.document.getText()
       const json = yaml.load(text)
@@ -68,19 +65,21 @@ export class SkaffoldPreviewUsecase {
 
       try {
         const skaffoldPreview = await this.gateway.exec(this.skaffoldPreview)
-        this.skaffoldPreview.panel.webview.html = Panel.createPreview(
-          skaffoldPreview.result,
-          srcUrl,
-          profiles,
-          skaffoldPreview.profile,
-        )
+        this.skaffoldPreview.panel.webview.html =
+          this.skaffoldPreview.createPreviewHTML(
+            skaffoldPreview.result,
+            srcUrl,
+            profiles,
+            skaffoldPreview.profile,
+          )
       } catch (error) {
-        this.skaffoldPreview.panel.webview.html = Panel.createPreview(
-          (error as RenderException).message,
-          srcUrl,
-          profiles,
-          this.skaffoldPreview.profile,
-        )
+        this.skaffoldPreview.panel.webview.html =
+          this.skaffoldPreview.createPreviewHTML(
+            (error as RenderException).message,
+            srcUrl,
+            profiles,
+            this.skaffoldPreview.profile,
+          )
       }
 
       // Handle messages from the webview
@@ -91,28 +90,28 @@ export class SkaffoldPreviewUsecase {
           }
 
           if (message.command === 'dropdownChanged') {
-            this.skaffoldPreview.panel.webview.html = Panel.createPlainHTML(
-              '読み込み中...',
-              srcUrl,
-            )
+            this.skaffoldPreview.panel.webview.html =
+              this.skaffoldPreview.loadingHTML(srcUrl)
             try {
               this.skaffoldPreview.profile = message.value
               const skaffoldPreview = await this.gateway.exec(
                 this.skaffoldPreview,
               )
-              this.skaffoldPreview.panel.webview.html = Panel.createPreview(
-                skaffoldPreview.result,
-                srcUrl,
-                profiles,
-                skaffoldPreview.profile,
-              )
+              this.skaffoldPreview.panel.webview.html =
+                this.skaffoldPreview.createPreviewHTML(
+                  skaffoldPreview.result,
+                  srcUrl,
+                  profiles,
+                  skaffoldPreview.profile,
+                )
             } catch (error) {
-              this.skaffoldPreview.panel.webview.html = Panel.createPreview(
-                (error as RenderException).message,
-                srcUrl,
-                profiles,
-                this.skaffoldPreview.profile,
-              )
+              this.skaffoldPreview.panel.webview.html =
+                this.skaffoldPreview.createPreviewHTML(
+                  (error as RenderException).message,
+                  srcUrl,
+                  profiles,
+                  this.skaffoldPreview.profile,
+                )
             }
           }
         },
