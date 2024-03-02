@@ -1,9 +1,9 @@
-import * as vscode from 'vscode'
+import { ExtensionContext, Disposable, TextDocument, workspace } from 'vscode'
 
 export class Extension {
-  constructor(private context: vscode.ExtensionContext) {}
+  constructor(private context: ExtensionContext) {}
 
-  addSubscriptions(disposable: vscode.Disposable) {
+  addSubscriptions(disposable: Disposable) {
     this.context.subscriptions.push(disposable)
   }
 }

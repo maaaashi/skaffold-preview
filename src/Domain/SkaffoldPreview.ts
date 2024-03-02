@@ -3,6 +3,7 @@ import { escapeHtml } from '../Lib/Panel'
 
 export class SkaffoldPreview {
   private _result: string
+  public previewOnSave = true
 
   constructor(
     private _editor: TextEditor | undefined,
@@ -48,6 +49,10 @@ export class SkaffoldPreview {
     this._panel = p
   }
 
+  filename() {
+    return this.editor?.document.fileName
+  }
+
   loadingHTML(src: { script: Uri; style: Uri }) {
     return `
 <html>
@@ -55,6 +60,9 @@ export class SkaffoldPreview {
     <link href="${src.style}" rel="stylesheet">
   </head>
   <body>
+    <h1>${this.filename()}</h1>
+    <input type="checkbox" ${this.previewOnSave && 'checked'} id="preview-on-save-check"/> <label for="preview-on-save-check">Preview On Save</label>
+
     <div class="preview">
       <div class="spinner-box">
         <div class="blue-orbit leo">
@@ -89,6 +97,9 @@ export class SkaffoldPreview {
     <link href="${src.style}" rel="stylesheet">
   </head>
   <body>
+    <h1>${this.filename()}</h1>
+    <input type="checkbox" ${this.previewOnSave && 'checked'} id="preview-on-save-check"/> <label for="preview-on-save-check">Preview On Save</label>
+
     <div class="header">
       <select id="profile-dropdown">
         <option value="">(profileを選択)</option>

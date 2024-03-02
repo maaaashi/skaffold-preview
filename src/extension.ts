@@ -1,10 +1,10 @@
-import * as vscode from 'vscode'
+import { ExtensionContext, workspace } from 'vscode'
 import { Extension } from './VSCode/Extension'
 import { SkaffoldPreviewGateway } from './Gateway/SkaffoldPreviewGateway'
 import { SkaffoldPreviewUsecase } from './Usecase/SkaffoldPreviewUsecase'
 import { SkaffoldCLI } from './Driver/SkaffoldCLI'
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: ExtensionContext) {
   const extension = new Extension(context)
 
   const skaffoldCliDriver = new SkaffoldCLI()
@@ -13,6 +13,9 @@ export function activate(context: vscode.ExtensionContext) {
     skaffoldPreviewGateway,
   )
 
+  workspace.onDidSaveTextDocument((document) => {
+    skaffoldPreviewUsecase.onSaveEditor(context, document)
+  })
   extension.addSubscriptions(skaffoldPreviewUsecase.disposable(context))
 }
 
