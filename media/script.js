@@ -1,10 +1,10 @@
 const vscode = acquireVsCodeApi()
 document
-  .getElementById('profile-dropdown')
-  .addEventListener('change', (event) => {
+  .getElementById('preview-render-button')
+  .addEventListener('click', () => {
     vscode.postMessage({
       command: 'dropdownChanged',
-      value: event.target.value,
+      value: document.getElementById('profile-dropdown').value,
     })
   })
 

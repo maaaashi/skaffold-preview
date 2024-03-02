@@ -70,10 +70,13 @@
 }
 
 /* preivew */
+.header {
+  display: flex;
+}
+
 select {
   /* Reset Select */
   appearance: none;
-  outline: 10px red;
   border: 0;
   box-shadow: none;
   /* Personalize */
@@ -83,10 +86,6 @@ select {
   color: #fff;
   background-image: none;
   cursor: pointer;
-}
-
-select::-ms-expand {
-  display: none;
 }
 
 .select {
@@ -188,6 +187,23 @@ select::-ms-expand {
   pointer-events: none;
   user-select: none;
 }
+
+.header button {
+  background-color: #f39c12;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.header button:hover {
+  background-color: #be7b0e;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 640px) {
   .checkbox-wrapper-4 .cbx {
     width: 100%;

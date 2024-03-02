@@ -68,7 +68,7 @@ export class SkaffoldPreview {
       <label class="cbx" for="preview-on-save-check"><span>
       <svg width="12px" height="10px">
         <use xlink:href="#check-4"></use>
-      </svg></span><span>preview-on-save-check</span></label>
+      </svg></span><span>保存時に再実行する</span></label>
       <svg class="inline-svg">
         <symbol id="check-4" viewbox="0 0 12 10">
           <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -118,7 +118,7 @@ export class SkaffoldPreview {
       <label class="cbx" for="preview-on-save-check"><span>
       <svg width="12px" height="10px">
         <use xlink:href="#check-4"></use>
-      </svg></span><span>preview-on-save-check</span></label>
+      </svg></span><span>保存時に再実行する</span></label>
       <svg class="inline-svg">
         <symbol id="check-4" viewbox="0 0 12 10">
           <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -129,7 +129,7 @@ export class SkaffoldPreview {
     <div class="header">
       <div class="select">
         <select id="profile-dropdown">
-          <option value="">(profileを選択)</option>
+          <option value="">profile なし</option>
           ${profiles.map(
             (profile) =>
               `<option value="${profile.name}" ${
@@ -138,6 +138,9 @@ export class SkaffoldPreview {
           )}
         </select>
       </div>
+      <button id="preview-render-button">
+        描画
+      </button>
     </div>
     <div class="preview">
       <pre>${escapeHtml(body)}</pre>
