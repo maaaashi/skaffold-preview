@@ -60,6 +60,11 @@ export class SkaffoldPreviewUsecase {
         return
       }
 
+      if (this.skaffoldPreview.editor.document.languageId !== 'yaml') {
+        window.showErrorMessage('yaml形式のファイルを開いてください')
+        return
+      }
+
       this.skaffoldPreview.profile = ''
 
       if (!this.skaffoldPreview.panel) {
