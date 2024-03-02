@@ -61,7 +61,20 @@ export class SkaffoldPreview {
   </head>
   <body>
     <h1>${this.filename()}</h1>
-    <input type="checkbox" ${this.previewOnSave && 'checked'} id="preview-on-save-check"/> <label for="preview-on-save-check">Preview On Save</label>
+    <div class="checkbox-wrapper-4">
+      <input class="inp-cbx" id="preview-on-save-check" type="checkbox" ${
+        this.previewOnSave && 'checked'
+      }/>
+      <label class="cbx" for="preview-on-save-check"><span>
+      <svg width="12px" height="10px">
+        <use xlink:href="#check-4"></use>
+      </svg></span><span>preview-on-save-check</span></label>
+      <svg class="inline-svg">
+        <symbol id="check-4" viewbox="0 0 12 10">
+          <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+        </symbol>
+      </svg>
+    </div>
 
     <div class="preview">
       <div class="spinner-box">
@@ -98,18 +111,33 @@ export class SkaffoldPreview {
   </head>
   <body>
     <h1>${this.filename()}</h1>
-    <input type="checkbox" ${this.previewOnSave && 'checked'} id="preview-on-save-check"/> <label for="preview-on-save-check">Preview On Save</label>
+    <div class="checkbox-wrapper-4">
+      <input class="inp-cbx" id="preview-on-save-check" type="checkbox" ${
+        this.previewOnSave && 'checked'
+      }/>
+      <label class="cbx" for="preview-on-save-check"><span>
+      <svg width="12px" height="10px">
+        <use xlink:href="#check-4"></use>
+      </svg></span><span>preview-on-save-check</span></label>
+      <svg class="inline-svg">
+        <symbol id="check-4" viewbox="0 0 12 10">
+          <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+        </symbol>
+      </svg>
+    </div>
 
     <div class="header">
-      <select id="profile-dropdown">
-        <option value="">(profileを選択)</option>
-        ${profiles.map(
-          (profile) =>
-            `<option value="${profile.name}" ${
-              profile.name === active && 'selected'
-            }>${profile.name}</option>`,
-        )}
-      </select>
+      <div class="select">
+        <select id="profile-dropdown">
+          <option value="">(profileを選択)</option>
+          ${profiles.map(
+            (profile) =>
+              `<option value="${profile.name}" ${
+                profile.name === active && 'selected'
+              }>${profile.name}</option>`,
+          )}
+        </select>
+      </div>
     </div>
     <div class="preview">
       <pre>${escapeHtml(body)}</pre>
