@@ -12,6 +12,8 @@ package Domain #FFFFAA {
     - editor: TextEditor | undefined
     - panel: WebviewPanel | undefined
     - profile: string
+    + loadingHTML(): string
+    + createPreviewHTML()
   }
 
   class RenderException {
@@ -27,7 +29,8 @@ package Usecase #FFAAAA {
   class SkaffoldPreviewUsecase {
     - gateway: SkaffoldPreviewGateway
     - skaffoldPreview: SkaffoldPreview
-    + disposable(context: vscode.ExtensionContext): void
+    - exec(): void
+    + disposable(context: vscode.ExtensionContext): vscode.Disposable
   }
 }
 

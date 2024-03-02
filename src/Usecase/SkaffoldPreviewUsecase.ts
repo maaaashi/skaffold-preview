@@ -19,6 +19,35 @@ export class SkaffoldPreviewUsecase {
     this.skaffoldPreview = new SkaffoldPreview(undefined, undefined, '')
   }
 
+  private async exec(srcUrl: { script: Uri; style: Uri }) {
+    if (!this.skaffoldPreview.editor || !this.skaffoldPreview.panel) {
+      return
+    }
+
+    const text = this.skaffoldPreview.editor.document.getText()
+    const json = yaml.load(text)
+    const profiles = (json as { profiles: { name: string }[] }).profiles || []
+
+    try {
+      const skaffoldPreview = await this.gateway.exec(this.skaffoldPreview)
+      this.skaffoldPreview.panel.webview.html =
+        this.skaffoldPreview.createPreviewHTML(
+          skaffoldPreview.result,
+          srcUrl,
+          profiles,
+          skaffoldPreview.profile,
+        )
+    } catch (error) {
+      this.skaffoldPreview.panel.webview.html =
+        this.skaffoldPreview.createPreviewHTML(
+          (error as RenderException).message,
+          srcUrl,
+          profiles,
+          this.skaffoldPreview.profile,
+        )
+    }
+  }
+
   disposable(context: ExtensionContext): Disposable {
     return commands.registerCommand('extension.skaffoldPreview', async () => {
       this.skaffoldPreview.editor = window.activeTextEditor
@@ -59,28 +88,7 @@ export class SkaffoldPreviewUsecase {
       this.skaffoldPreview.panel.webview.html =
         this.skaffoldPreview.loadingHTML(srcUrl)
 
-      const text = this.skaffoldPreview.editor.document.getText()
-      const json = yaml.load(text)
-      const profiles = (json as { profiles: { name: string }[] }).profiles || []
-
-      try {
-        const skaffoldPreview = await this.gateway.exec(this.skaffoldPreview)
-        this.skaffoldPreview.panel.webview.html =
-          this.skaffoldPreview.createPreviewHTML(
-            skaffoldPreview.result,
-            srcUrl,
-            profiles,
-            skaffoldPreview.profile,
-          )
-      } catch (error) {
-        this.skaffoldPreview.panel.webview.html =
-          this.skaffoldPreview.createPreviewHTML(
-            (error as RenderException).message,
-            srcUrl,
-            profiles,
-            this.skaffoldPreview.profile,
-          )
-      }
+      await this.exec(srcUrl)
 
       // Handle messages from the webview
       this.skaffoldPreview.panel.webview.onDidReceiveMessage(
@@ -92,27 +100,9 @@ export class SkaffoldPreviewUsecase {
           if (message.command === 'dropdownChanged') {
             this.skaffoldPreview.panel.webview.html =
               this.skaffoldPreview.loadingHTML(srcUrl)
-            try {
-              this.skaffoldPreview.profile = message.value
-              const skaffoldPreview = await this.gateway.exec(
-                this.skaffoldPreview,
-              )
-              this.skaffoldPreview.panel.webview.html =
-                this.skaffoldPreview.createPreviewHTML(
-                  skaffoldPreview.result,
-                  srcUrl,
-                  profiles,
-                  skaffoldPreview.profile,
-                )
-            } catch (error) {
-              this.skaffoldPreview.panel.webview.html =
-                this.skaffoldPreview.createPreviewHTML(
-                  (error as RenderException).message,
-                  srcUrl,
-                  profiles,
-                  this.skaffoldPreview.profile,
-                )
-            }
+            this.skaffoldPreview.profile = message.value
+
+            await this.exec(srcUrl)
           }
         },
       )
