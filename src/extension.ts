@@ -17,6 +17,11 @@ export function activate(context: ExtensionContext) {
     skaffoldPreviewUsecase.onSaveEditor(context, document)
   })
   extension.addSubscriptions(skaffoldPreviewUsecase.disposable(context))
+
+  extension.addStatusBarItem(
+    'extension.skaffoldPreview',
+    '$(play) Skaffold Preview',
+  )
 }
 
 export function deactivate() {}
