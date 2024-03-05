@@ -104,7 +104,6 @@ export class SkaffoldPreview {
     profiles: { name: string }[],
     active: string,
   ) {
-    console.log(yamlToHtml(escapeHtml(body)))
     return `
 <html>
   <head>
