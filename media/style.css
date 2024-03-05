@@ -204,6 +204,10 @@ select {
   cursor: pointer;
 }
 
+.preview .key {
+  color: #f39c12;
+}
+
 @media screen and (max-width: 640px) {
   .checkbox-wrapper-4 .cbx {
     width: 100%;

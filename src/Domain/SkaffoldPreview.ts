@@ -1,5 +1,5 @@
 import { TextEditor, Uri, WebviewPanel } from 'vscode'
-import { escapeHtml } from '../Lib/Panel'
+import { escapeHtml, yamlToHtml } from '../Lib/util'
 
 export class SkaffoldPreview {
   private _result: string
@@ -104,6 +104,7 @@ export class SkaffoldPreview {
     profiles: { name: string }[],
     active: string,
   ) {
+    console.log(yamlToHtml(escapeHtml(body)))
     return `
 <html>
   <head>
@@ -143,7 +144,7 @@ export class SkaffoldPreview {
       </button>
     </div>
     <div class="preview">
-      <pre>${escapeHtml(body)}</pre>
+      ${yamlToHtml(escapeHtml(body))}
     </div>
   </body>
   <script src="${src.script}"></script>
