@@ -8,8 +8,8 @@ export class SkaffoldPreviewGateway {
   constructor(private driver: SkaffoldCLI) {}
 
   async exec(skaffoldPreview: SkaffoldPreview): Promise<SkaffoldPreview> {
-    const directoryPath = path.dirname(skaffoldPreview.currentPath || '')
-    const command = `cd ${directoryPath} && skaffold render -f ${
+    // const directoryPath = path.dirname(skaffoldPreview.currentPath || '')
+    const command = `skaffold render -f ${
       skaffoldPreview.currentPath
     }${skaffoldPreview.profile ? ` -p ${skaffoldPreview.profile}` : ''}`
 

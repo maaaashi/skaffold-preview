@@ -7,6 +7,7 @@ import {
   Uri,
   ExtensionContext,
   TextDocument,
+  workspace,
 } from 'vscode'
 import { RenderException } from '../Domain/ExecException'
 import path from 'path'
@@ -128,31 +129,33 @@ export class SkaffoldPreviewUsecase {
   }
 
   // エディタが保存された時の処理
-  async onSaveEditor(context: ExtensionContext, document: TextDocument) {
-    if (!this.skaffoldPreview.panel) return
-    if (document.uri !== this.skaffoldPreview.editor?.document.uri) return
-    if (!this.skaffoldPreview.previewOnSave) return
+  onSaveEditor(context: ExtensionContext, document: typeof workspace) {
+    workspace.onDidSaveTextDocument(async (document) => {
+      if (!this.skaffoldPreview.panel) return
+      if (document.uri !== this.skaffoldPreview.editor?.document.uri) return
+      if (!this.skaffoldPreview.previewOnSave) return
 
-    // Previewで使われるスクリプトとスタイルのパスを取得
-    const scriptPathOnDisk = Uri.file(
-      path.join(context.extensionPath, 'media', 'script.js'),
-    )
-    const scriptUri =
-      this.skaffoldPreview.panel.webview.asWebviewUri(scriptPathOnDisk)
+      // Previewで使われるスクリプトとスタイルのパスを取得
+      const scriptPathOnDisk = Uri.file(
+        path.join(context.extensionPath, 'media', 'script.js'),
+      )
+      const scriptUri =
+        this.skaffoldPreview.panel.webview.asWebviewUri(scriptPathOnDisk)
 
-    const stylePathOnDisk = Uri.file(
-      path.join(context.extensionPath, 'media', 'style.css'),
-    )
-    const styleUri =
-      this.skaffoldPreview.panel.webview.asWebviewUri(stylePathOnDisk)
+      const stylePathOnDisk = Uri.file(
+        path.join(context.extensionPath, 'media', 'style.css'),
+      )
+      const styleUri =
+        this.skaffoldPreview.panel.webview.asWebviewUri(stylePathOnDisk)
 
-    const srcUrl = {
-      script: scriptUri,
-      style: styleUri,
-    }
+      const srcUrl = {
+        script: scriptUri,
+        style: styleUri,
+      }
 
-    this.skaffoldPreview.panel.webview.html =
-      this.skaffoldPreview.loadingHTML(srcUrl)
-    await this.exec(srcUrl)
+      this.skaffoldPreview.panel.webview.html =
+        this.skaffoldPreview.loadingHTML(srcUrl)
+      await this.exec(srcUrl)
+    })
   }
 }

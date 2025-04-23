@@ -1,8 +1,6 @@
 import {
   ExtensionContext,
   Disposable,
-  TextDocument,
-  workspace,
   window,
   StatusBarAlignment,
 } from 'vscode'

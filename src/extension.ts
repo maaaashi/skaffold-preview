@@ -13,9 +13,8 @@ export function activate(context: ExtensionContext) {
     skaffoldPreviewGateway,
   )
 
-  workspace.onDidSaveTextDocument((document) => {
-    skaffoldPreviewUsecase.onSaveEditor(context, document)
-  })
+  skaffoldPreviewUsecase.onSaveEditor(context, workspace)
+
   extension.addSubscriptions(skaffoldPreviewUsecase.disposable(context))
 
   extension.addStatusBarItem(
